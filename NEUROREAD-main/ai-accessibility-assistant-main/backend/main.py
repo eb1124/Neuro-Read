@@ -1,12 +1,14 @@
+import os
 import uvicorn
 
 
 def main():
-    # Run from backend/ with: python main.py
+    port = int(os.environ.get("PORT", 10000))
+
     uvicorn.run(
         "app.main:app",
-        host="127.0.0.1",
-        port=8001,
+        host="0.0.0.0",
+        port=port,
         reload=False,
         log_level="info",
     )
@@ -14,4 +16,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
