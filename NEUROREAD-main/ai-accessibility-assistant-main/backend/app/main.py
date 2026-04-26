@@ -12,7 +12,17 @@ from app.models.reading import ReadingSession, AnalyticsCache
 from app.services.learning.progress_tracker import LearningProgress  # auto-create table
 
 app = FastAPI(title="NeuroAdapt AI Engine")
-
+app.add_middleware(
+    CORSMiddleware,
+    # Vite dev server may be opened via localhost, 127.0.0.1, or LAN IP.
+    # Use a regex so API calls don't fail due to Origin mismatch.
+    allow_origins=[
+        "https://neuro-read-rouge.vercel.app"
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
     return JSONResponse(
@@ -55,17 +65,7 @@ async def log_requests(request, call_next):
     print(f"[api] {request.method} {request.url.path} -> {response.status_code}")
     return response
 
-app.add_middleware(
-    CORSMiddleware,
-    # Vite dev server may be opened via localhost, 127.0.0.1, or LAN IP.
-    # Use a regex so API calls don't fail due to Origin mismatch.
-    allow_origins=[
-        "https://neuro-read-rouge.vercel.app"
-    ],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+
 
 # Ensure static/audio folder exists (use absolute path so cwd doesn't matter)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
