@@ -2,7 +2,7 @@
 import json
 import requests
 
-BASE = "http://127.0.0.1:8001"
+BASE = "https://your-backend.onrender.com"
 
 
 def post(path, payload, timeout=25):

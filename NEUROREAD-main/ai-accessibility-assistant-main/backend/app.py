@@ -1,4 +1,5 @@
 import os
+import uvicorn
 
 port = int(os.environ.get("PORT", 10000))
 

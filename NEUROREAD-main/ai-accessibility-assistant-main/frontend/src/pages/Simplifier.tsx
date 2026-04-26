@@ -5,20 +5,23 @@ import CognitivePanel from '../components/CognitivePanel';
 import SimplifiedText from '../components/SimplifiedText';
 import DyslexiaToggle from '../components/DyslexiaToggle';
 import AudioPlayer from '../components/AudioPlayer';
-import { postSimplify } from '../services/api';
+import { simplifyText } from '../services/api';
 import type { SimplifyResponse, UserProfile } from '../types/apiTypes';
 
 interface SimplifierProps {
   userId: string;
   onUserIdChange: (id: string) => void;
 }
-const addToHistory = (newSession: any) => {
+
+const addToHistory = (newSession: any): void => {
   const raw = localStorage.getItem("sessions");
   const existing = raw ? JSON.parse(raw) : [];
   const updated = [newSession, ...existing];
   localStorage.setItem("sessions", JSON.stringify(updated));
 };
-const Simplifier: React.FC<SimplifierProps> = ({ userId, onUserIdChange }) => {
+
+const Simplifier: React.FC<SimplifierProps> = (props: SimplifierProps) => {
+  const { userId, onUserIdChange } = props;
   const [profile, setProfile] = useState<UserProfile>('default');
   const [text, setText] = useState<string>('');
   const [dyslexiaEnabled, setDyslexiaEnabled] = useState<boolean>(false);
@@ -27,7 +30,7 @@ const Simplifier: React.FC<SimplifierProps> = ({ userId, onUserIdChange }) => {
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<SimplifyResponse | null>(null);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (): Promise<void> => {
     if (!text.trim()) {
       setError('Please enter some text to simplify.');
       return;
@@ -36,13 +39,7 @@ const Simplifier: React.FC<SimplifierProps> = ({ userId, onUserIdChange }) => {
     setError(null);
     setLoading(true);
     try {
-  const data = await postSimplify({
-    text,
-    profile,
-    user_id: userId,
-    enable_dyslexia_support: dyslexiaEnabled,
-    enable_audio: audioEnabled,
-  });
+      const data = await simplifyText(text, profile, userId);
 
   // ✅ 1) Get original cognitive score from backend analysis
   const originalScore = data.original_analysis?.cognitive_load_score ?? 0;
