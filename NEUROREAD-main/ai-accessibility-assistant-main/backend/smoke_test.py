@@ -2,7 +2,7 @@
 import json
 import requests
 
-BASE = "https://your-backend.onrender.com"
+BASE = "https://neuro-read.onrender.com/"
 
 
 def post(path, payload, timeout=25):

@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://your-backend.onrender.com';
+export const BASE_URL = 'https://neuro-read.onrender.com';
 
 function getStoredUserId() {
   return localStorage.getItem('user_id') || '';

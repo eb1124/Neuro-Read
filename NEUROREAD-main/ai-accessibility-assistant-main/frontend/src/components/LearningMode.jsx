@@ -149,7 +149,7 @@ function ReadAlongSection({ userId }) {
               key={idx}
               onClick={async () => {
                 try {
-                  const res = await fetch("http://your-backend.onrender.com/define", {
+                  const res = await fetch("https://neuro-read.onrender.com//define", {
                     method: "POST",
                     headers: {
                       "Content-Type": "application/json",
@@ -192,7 +192,7 @@ function ReadAlongSection({ userId }) {
         <button
           onClick={async () => {
             try {
-              const res = await fetch("http://localhost:8001/assistive/simplify", {
+              const res = await fetch("https://neuro-read.onrender.com//assistive/simplify", {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
@@ -335,7 +335,7 @@ function VisualModeSection({ userId }) {
     const delay = setTimeout(() => {
       const fetchKeywords = async () => {
         try {
-          const res = await fetch("http://127.0.0.1:8001/assistive/simplify", {
+          const res = await fetch("https://neuro-read.onrender.com/assistive/simplify", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

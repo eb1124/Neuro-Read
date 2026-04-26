@@ -1,4 +1,4 @@
-const API_BASE = "https://your-backend.onrender.com";
+const API_BASE = "https://neuro-read.onrender.com";
 
 export const simplifyText = async (text) => {
   const response = await fetch(`${API_BASE}/assistive/simplify`, {

@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:8001/assistive/simplify';
+const API_URL = 'https://neuro-read.onrender.com';
 
 function mapProfile(profile) {
   const p = (profile || '').toLowerCase();
