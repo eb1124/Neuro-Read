@@ -13,6 +13,7 @@ interface SimplifierProps {
   onUserIdChange: (id: string) => void;
 }
 
+
 const addToHistory = (newSession: any): void => {
   const raw = localStorage.getItem("sessions");
   const existing = raw ? JSON.parse(raw) : [];
@@ -148,7 +149,7 @@ const Simplifier: React.FC<SimplifierProps> = (props: SimplifierProps) => {
                 exit={{ opacity: 0, y: 8 }}
                 transition={{ duration: 0.25, ease: 'easeOut' }}
               >
-                <AudioPlayer src={`http://127.0.0.1:8001${result.audio_file}`} />
+                <AudioPlayer src={`https://your-backend.onrender.com${result.audio_file}`} />
               </motion.div>
             )}
           </AnimatePresence>
