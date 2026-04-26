@@ -149,7 +149,7 @@ function ReadAlongSection({ userId }) {
               key={idx}
               onClick={async () => {
                 try {
-                  const res = await fetch("http://localhost:8001/define", {
+                  const res = await fetch("http://your-backend.onrender.com/define", {
                     method: "POST",
                     headers: {
                       "Content-Type": "application/json",

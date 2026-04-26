@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://localhost:8001';
+export const BASE_URL = 'http://your-backend.onrender.com';
 
 function getStoredUserId() {
   return localStorage.getItem('user_id') || '';
