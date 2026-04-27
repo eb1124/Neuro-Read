@@ -149,7 +149,7 @@ const Simplifier: React.FC<SimplifierProps> = (props: SimplifierProps) => {
                 exit={{ opacity: 0, y: 8 }}
                 transition={{ duration: 0.25, ease: 'easeOut' }}
               >
-                <AudioPlayer src={`https://your-backend.onrender.com${result.audio_file}`} />
+                <AudioPlayer src={`https://neuro-read.onrender.com${result.audio_file}`} />
               </motion.div>
             )}
           </AnimatePresence>
