@@ -16,7 +16,7 @@ app.add_middleware(
     CORSMiddleware,
     # Vite dev server may be opened via localhost, 127.0.0.1, or LAN IP.
     # Use a regex so API calls don't fail due to Origin mismatch.
-    allow_origins=["https://neuro-read-rouge.vercel.app"]
+    allow_origins=["https://neuro-read-rouge.vercel.app"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
