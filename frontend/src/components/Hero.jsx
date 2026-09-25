@@ -1,10 +1,13 @@
 export default function Hero() {
   return (
-    <header className="relative h-[80dvh] w-full overflow-hidden flex items-center bg-moss/5">
-      {/* Background soft shapes */}
-      <div className="absolute top-0 right-0 w-1/2 h-full bg-moss/5 rounded-bl-[10rem] -mr-32 blur-3xl" />
-      <div className="absolute bottom-0 left-0 w-1/3 h-1/2 bg-clay/5 rounded-tr-[10rem] -ml-32 blur-3xl" />
-      
+    <header className="relative min-h-[80dvh] w-full flex items-center bg-moss/5 py-28 md:py-32">
+      {/* Background soft shapes — clipped to the hero bounds so they never bleed
+          into other sections, without clipping the real text content below. */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-moss/5 rounded-bl-[10rem] -mr-32 blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-1/3 h-1/2 bg-clay/5 rounded-tr-[10rem] -ml-32 blur-3xl" />
+      </div>
+
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6">
         <div className="max-w-4xl hero-content">
           <h1 className="flex flex-col gap-4">

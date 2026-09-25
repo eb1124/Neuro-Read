@@ -291,7 +291,26 @@ export default function AssistiveMode({ active, onOpenSimplifier, onRunSimplifie
             </label>
           </div>
 
-          <div className="open-badge mt-4">
+          <div
+            role="button"
+            tabIndex={docResult ? 0 : -1}
+            aria-disabled={!docResult}
+            onClick={() => {
+              if (!docResult) return;
+              onSetInputText(docResult.original_text || docResult.simplified_text || '');
+              onOpenSimplifier();
+            }}
+            onKeyDown={(e) => {
+              if (!docResult) return;
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                onSetInputText(docResult.original_text || docResult.simplified_text || '');
+                onOpenSimplifier();
+              }
+            }}
+            className={`open-badge mt-4 ${docResult ? 'cursor-pointer hover:opacity-80 transition-opacity' : 'opacity-40 cursor-not-allowed pointer-events-none'}`}
+            title={docResult ? 'Open in the full chunk-by-chunk reading tool' : 'Upload a document first'}
+          >
             <span className="iconify" data-icon="solar:arrow-right-linear" style={{ width: '.7rem', height: '.7rem' }} />
             Open Tool
           </div>

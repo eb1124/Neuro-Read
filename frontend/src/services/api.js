@@ -137,14 +137,6 @@ export async function getHeatmap(text) {
   });
 }
 
-export async function getConceptGraph(text) {
-  return request('/assistive/concept-graph', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ text }),
-  });
-}
-
 export async function getChunks(text) {
   return request('/assistive/chunk', {
     method: 'POST',

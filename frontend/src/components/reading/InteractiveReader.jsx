@@ -1,9 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import ReadingModes from './ReadingModes';
 import HeatmapView from './HeatmapView';
-import { getHeatmap, getChunks, getConceptGraph } from '../../services/api';
+import { getHeatmap, getChunks } from '../../services/api';
 import { useAsync } from '../../hooks/useAsync';
-import ConceptGraph from './ConceptGraph';
 
 function splitWords(text) {
   return String(text || '').split(/(\b[\w']+\b)/g);
@@ -21,17 +20,14 @@ export default function InteractiveReader({
 
   const heatmapAsync = useAsync(getHeatmap, { retries: 0 });
   const chunksAsync = useAsync(getChunks, { retries: 0 });
-  const graphAsync = useAsync(getConceptGraph, { retries: 0 });
 
   const [heatmap, setHeatmap] = useState([]);
   const [chunks, setChunks] = useState([]);
-  const [graph, setGraph] = useState(null);
 
   useEffect(() => {
     setActiveIdx(0);
     setHeatmap([]);
     setChunks([]);
-    setGraph(null);
   }, [text]);
 
   useEffect(() => {
@@ -66,21 +62,6 @@ export default function InteractiveReader({
       })();
     }
   }, [mode, text]);
-
-  useEffect(() => {
-    const t = (text || '').trim();
-    if (!t) return;
-    // Build concept graph lazily once.
-    if (graph) return;
-    (async () => {
-      try {
-        const res = await graphAsync.run(t);
-        setGraph(res);
-      } catch {
-        setGraph(null);
-      }
-    })();
-  }, [text]);
 
   const guidedSentences = heatmap;
   const focusSentence = guidedSentences?.[activeIdx];
@@ -146,11 +127,6 @@ export default function InteractiveReader({
           ) : (
             <p className="text-xs text-charcoal/50">Chunking…</p>
           )}
-
-          <div className="mt-2">
-            <p className="text-[10px] font-medium text-charcoal/40 uppercase tracking-wider mb-2">Concept graph</p>
-            <ConceptGraph graph={graph} height={240} />
-          </div>
         </div>
       ) : mode === 'focus' ? (
         <div className="rounded-xl bg-white border border-moss/10 px-5 py-4" style={dyslexiaStyle}>

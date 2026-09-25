@@ -4,7 +4,7 @@ import os
 import re
 from collections import Counter
 from functools import lru_cache
-from typing import List, Optional
+from typing import Dict, List, Optional
 
 
 @lru_cache(maxsize=1)
@@ -41,6 +41,28 @@ def _lightweight_keywords(text: str, top_n: int) -> List[str]:
         return []
     counts = Counter(tokens)
     return [w for (w, _) in counts.most_common(top_n)]
+
+
+def keywords_from_difficult_words(difficult_words: Optional[List[Dict]], top_n: int = 5) -> List[str]:
+    """
+    Derive "key terms" from the same difficult-word list used to highlight and
+    define words in the chunk reading view, so the two stay in sync instead of
+    coming from an unrelated frequency count.
+    """
+    seen = set()
+    result: List[str] = []
+    for item in difficult_words or []:
+        word = item.get("word") if isinstance(item, dict) else None
+        if not word:
+            continue
+        key = word.lower()
+        if key in seen:
+            continue
+        seen.add(key)
+        result.append(word)
+        if len(result) >= top_n:
+            break
+    return result
 
 
 def extract_keywords(text: str, top_n: int = 5) -> List[str]:

@@ -45,9 +45,12 @@ export default function Navbar({ mode, onModeChange, onNavigate }) {
 
   const className = useMemo(() => {
     const base = 'fixed top-4 left-1/2 -translate-x-1/2 z-[100] transition-all duration-500 rounded-full px-8 py-3.5 flex items-center justify-between w-[95%] max-w-6xl border shadow-sm';
-    if (!scrolled) return `${base} bg-white/80 backdrop-blur-[12px] text-moss border-black/5`;
-    return `${base} bg-white/95 backdrop-blur-[16px] text-moss border-black/10 shadow-md translate-y-2`;
-  }, [scrolled]);
+    // Solid (non-transparent) background so page content scrolling underneath this
+    // fixed pill is fully hidden instead of showing through half-cut and blurred.
+    const theme = isDark ? 'bg-charcoal text-cream border-white/10' : 'bg-cream text-moss border-black/5';
+    if (!scrolled) return `${base} ${theme}`;
+    return `${base} ${theme} shadow-md translate-y-2`;
+  }, [scrolled, isDark]);
 
   return (
     <nav id="navbar" className={className}>

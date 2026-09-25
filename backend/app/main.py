@@ -121,9 +121,6 @@ app.include_router(assistive_tutor_router)
 from app.routes.assistive.heatmap import router as assistive_heatmap_router
 app.include_router(assistive_heatmap_router)
 
-from app.routes.assistive.concept_graph import router as assistive_concept_graph_router
-app.include_router(assistive_concept_graph_router)
-
 from app.routes.assistive.chunk import router as assistive_chunk_router
 app.include_router(assistive_chunk_router)
 

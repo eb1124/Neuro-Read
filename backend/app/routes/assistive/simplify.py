@@ -8,7 +8,7 @@ from app.services.accessibility import (
     apply_dyslexia_formatting,
     generate_audio_payload,
 )
-from app.services.assistive.keyword_extractor import extract_keywords
+from app.services.assistive.keyword_extractor import extract_keywords, keywords_from_difficult_words
 from app.services.assistive.tts_service import generate_speech_audio
 from app.schemas.personalization import PersonalizationUpdateRequest, SessionMetrics
 from app.services.personalization.profile_engine import (
@@ -150,8 +150,13 @@ def simplify(request: SimplifyRequest):
         except Exception:
             audio_url = None
 
-    # Keywords for convenience (used by new assistive endpoints too)
-    keywords = extract_keywords(request.text)
+    # Keywords shown as "Key Terms Detected" chips: reuse the same difficult-word
+    # list that drives the clickable highlights/definitions in chunk reading view,
+    # so the two features stay consistent. Fall back to frequency-based extraction
+    # only if nothing was flagged as difficult.
+    keywords = keywords_from_difficult_words(simplified_analysis.get("difficult_words"))
+    if not keywords:
+        keywords = extract_keywords(request.text)
 
     return {
         "auto_selected_level": level,
